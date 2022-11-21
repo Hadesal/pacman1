@@ -4,18 +4,28 @@ let positionX = 0;
 let positionY = 0;
 const PACMAN_EL = document.querySelector("#pacman");
 
+let pacmanImages =[
+    "./assets/images/pacman/pacman-0.png",
+    "./assets/images/pacman/pacman-1.png",
+    "./assets/images/pacman/pacman-2.png",
+]
+
+
 const PACMAN_SOURCE = PACMAN_EL.querySelector("img").src;
 const PACMAN_1 = "../assets/images/pacman/pacman-1.png";
 const PACMAN_2 = "../assets/images/pacman/pacman-2.png";
 const PACMAN_3 = "../assets/images/pacman/pacman-0.png";
+
+let x = 0;
 
 function update() {
     positionX += velocityX;
     PACMAN_EL.style.left = positionX + "px";
     positionY += velocityY;
     PACMAN_EL.style.top = positionY + "px"; 
-    animate(PACMAN_SOURCE,PACMAN_1,PACMAN_2,PACMAN_3);
 }
+
+setInterval(animate, 500);
 
 document.addEventListener("keydown", function() {
     switch(event.key) {
@@ -37,9 +47,13 @@ document.addEventListener("keydown", function() {
         break;
     }
 })
-function animate(source, pic1, pic2, pic3) {
-    source = pic3;
-    console.log(source);
-}
+
+function animate() {
+    document.getElementById("pacman-img").src = pacmanImages[x]
+            x++;
+            if (pacmanImages.length == x) {
+                x = 0;
+            } return x
+        }
 
 setInterval(update, 16.67);
