@@ -5,6 +5,12 @@ let velocityY = 0;
 let positionX = 100;
 let positionY = 100;
 
+let score = 0;
+const SCOREFIELD = document.createElement("span");
+SCOREFIELD.innerText = `Score: ${score}`;
+SCOREFIELD.classList.add("score");
+document.body.appendChild(SCOREFIELD);
+
 let pacmanImages = [
   "./assets/images/pacman/pacman-0.png",
   "./assets/images/pacman/pacman-1.png",
@@ -28,6 +34,7 @@ function update() {
       checkCollision(squares[i]);
     }
   }
+  checkDots();
 }
 
 setInterval(animate, 500);
@@ -93,6 +100,21 @@ function animate() {
     imageCount = 0;
   }
   return imageCount;
+}
+
+function checkDots() {
+  for(i in squares) {
+    if(squares[i].classList.contains("pac-dot")) {
+      if(PACMAN_EL.getClientRects()[0].x < squares[i].getClientRects()[0].x + squares[i].getClientRects()[0].width &&
+    PACMAN_EL.getClientRects()[0].x + PACMAN_EL.getClientRects()[0].width > squares[i].getClientRects()[0].x &&
+    PACMAN_EL.getClientRects()[0].y < squares[i].getClientRects()[0].y + squares[i].getClientRects()[0].height &&
+    PACMAN_EL.getClientRects()[0].y + PACMAN_EL.getClientRects()[0].height > squares[i].getClientRects()[0].y){
+      squares[i].classList.remove("pac-dot");
+      score++;
+      SCOREFIELD.innerText = `Score: ${score}`;
+    }
+    }
+  }
 }
 
 setInterval(update, 16.67);
