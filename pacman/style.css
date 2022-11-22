@@ -2,23 +2,16 @@ body {
   margin: 0;
 }
 
-#pacman {
-  display: block;
-  height: 20px;
-  width: 20px;
-}
-
-#pacman-img {
-  width: 100%;
-  height: 100%;
-}
-
 #game {
   position: relative;
   width: 800px;
   height: 800px;
   margin: auto;
-  background-color: gray;
+}
+#pacman {
+  align-self: center;
+  background-size: cover;
+  scale: 1.5;
 }
 
 .entity {
@@ -35,6 +28,7 @@ body {
   width: 800px;
   height: 800px;
   border: solid black;
+  background-color: grey;
 }
 
 .grid div {
@@ -44,11 +38,13 @@ body {
 
 .pac-dot {
   background-image: url("./assets/images/pellet/pellet.png");
+  scale: 2;
   background-size: cover;
 }
 
 .wall {
   background-image: url("./assets/images/wall1.jpg");
+  background-size: cover;
 }
 
 .power-pellet {
@@ -70,11 +66,6 @@ body {
 
 .clyde {
   background-color: orange;
-}
-
-.pac-man {
-  background-color: yellow;
-  border-radius: 10px;
 }
 
 .scared-ghost {

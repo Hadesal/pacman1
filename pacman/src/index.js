@@ -16,11 +16,9 @@ let pacmanImages = [
   "./assets/images/pacman/pacman-1.png",
   "./assets/images/pacman/pacman-2.png",
 ];
-
-const PACMAN_SOURCE = PACMAN_EL.querySelector("img").src;
-const PACMAN_1 = "../assets/images/pacman/pacman-1.png";
-const PACMAN_2 = "../assets/images/pacman/pacman-2.png";
-const PACMAN_3 = "../assets/images/pacman/pacman-0.png";
+const PACMAN_1 = "./assets/images/pacman/pacman-1.png";
+const PACMAN_2 = "./assets/images/pacman/pacman-2.png";
+const PACMAN_3 = "./assets/images/pacman/pacman-0.png";
 
 let imageCount = 0;
 function movePacMan() {
@@ -67,23 +65,27 @@ document.addEventListener("keydown", function () {
 });
 
 function checkCollision(target) {
-  if(PACMAN_EL.getClientRects()[0].x < target.getClientRects()[0].x + target.getClientRects()[0].width &&
-    PACMAN_EL.getClientRects()[0].x + PACMAN_EL.getClientRects()[0].width > target.getClientRects()[0].x &&
-    PACMAN_EL.getClientRects()[0].y < target.getClientRects()[0].y + target.getClientRects()[0].height &&
-    PACMAN_EL.getClientRects()[0].y + PACMAN_EL.getClientRects()[0].height > target.getClientRects()[0].y){
-    if(velocityX > 0) {
+  if (
+    PACMAN_EL.getClientRects()[0].x <
+      target.getClientRects()[0].x + target.getClientRects()[0].width &&
+    PACMAN_EL.getClientRects()[0].x + PACMAN_EL.getClientRects()[0].width >
+      target.getClientRects()[0].x &&
+    PACMAN_EL.getClientRects()[0].y <
+      target.getClientRects()[0].y + target.getClientRects()[0].height &&
+    PACMAN_EL.getClientRects()[0].y + PACMAN_EL.getClientRects()[0].height >
+      target.getClientRects()[0].y
+  ) {
+    if (velocityX > 0) {
       positionX -= 2;
       PACMAN_EL.style.left = positionX + "px";
-    }
-    else if(velocityX < 0) {
+    } else if (velocityX < 0) {
       positionX += 2;
       PACMAN_EL.style.left = positionX + "px";
     }
-    if(velocityY > 0) {
+    if (velocityY > 0) {
       positionY -= 2;
       PACMAN_EL.style.top = positionY + "px";
-    }
-    else if(velocityY < 0) {
+    } else if (velocityY < 0) {
       positionY += 2;
       PACMAN_EL.style.top = positionY + "px";
     }
@@ -91,7 +93,8 @@ function checkCollision(target) {
 }
 
 function animate() {
-  document.getElementById("pacman-img").src = pacmanImages[imageCount];
+  PACMAN_EL.style.backgroundImage = `url("${pacmanImages[imageCount]}")`;
+
   imageCount++;
   if (pacmanImages.length == imageCount) {
     imageCount = 0;
@@ -115,4 +118,3 @@ function checkDots() {
 }
 
 setInterval(update, 16.67);
-
