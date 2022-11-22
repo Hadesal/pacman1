@@ -38,7 +38,7 @@ body {
 }
 
 .wall {
-  background-color: blue;
+  background-image: url("/home/hadi/Desktop/pacman1/pacman/assets/images/wall1.jpg");
 }
 
 .power-pellet {
