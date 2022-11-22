@@ -37,27 +37,27 @@ function update() {
   checkDots();
 }
 
-setInterval(animate, 500);
+setInterval(animate, 100);
 
 document.addEventListener("keydown", function () {
   switch (event.key) {
     case "ArrowDown":
-      velocityY = 1;
+      velocityY = 2;
       velocityX = 0;
       PACMAN_EL.style.transform = "rotate(90deg)";
       break;
     case "ArrowUp":
-      velocityY = -1;
+      velocityY = -2;
       velocityX = 0;
       PACMAN_EL.style.transform = "rotate(-90deg)";
       break;
     case "ArrowLeft":
-      velocityX = -1;
+      velocityX = -2;
       velocityY = 0;
       PACMAN_EL.style.transform = "rotate(180deg)";
       break;
     case "ArrowRight":
-      velocityX = 1;
+      velocityX = 2;
       velocityY = 0;
       PACMAN_EL.style.transform = "rotate(0deg)";
       break;
@@ -103,16 +103,24 @@ function animate() {
 }
 
 function checkDots() {
-  for(i in squares) {
-    if(squares[i].classList.contains("pac-dot")) {
-      if(PACMAN_EL.getClientRects()[0].x < squares[i].getClientRects()[0].x + squares[i].getClientRects()[0].width &&
-    PACMAN_EL.getClientRects()[0].x + PACMAN_EL.getClientRects()[0].width > squares[i].getClientRects()[0].x &&
-    PACMAN_EL.getClientRects()[0].y < squares[i].getClientRects()[0].y + squares[i].getClientRects()[0].height &&
-    PACMAN_EL.getClientRects()[0].y + PACMAN_EL.getClientRects()[0].height > squares[i].getClientRects()[0].y){
-      squares[i].classList.remove("pac-dot");
-      score++;
-      SCOREFIELD.innerText = `Score: ${score}`;
-    }
+  for (i in squares) {
+    if (squares[i].classList.contains("pac-dot")) {
+      if (
+        PACMAN_EL.getClientRects()[0].x <
+          squares[i].getClientRects()[0].x +
+            squares[i].getClientRects()[0].width &&
+        PACMAN_EL.getClientRects()[0].x + PACMAN_EL.getClientRects()[0].width >
+          squares[i].getClientRects()[0].x &&
+        PACMAN_EL.getClientRects()[0].y <
+          squares[i].getClientRects()[0].y +
+            squares[i].getClientRects()[0].height &&
+        PACMAN_EL.getClientRects()[0].y + PACMAN_EL.getClientRects()[0].height >
+          squares[i].getClientRects()[0].y
+      ) {
+        squares[i].classList.remove("pac-dot");
+        score++;
+        SCOREFIELD.innerText = `Score: ${score}`;
+      }
     }
   }
 }

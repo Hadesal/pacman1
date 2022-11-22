@@ -11,7 +11,7 @@ body {
 #pacman {
   align-self: center;
   background-size: cover;
-  scale: 1.5;
+  scale: 1.2;
 }
 
 .entity {
@@ -38,8 +38,8 @@ body {
 
 .pac-dot {
   background-image: url("./assets/images/pellet/pellet.png");
-  scale: 2;
   background-size: cover;
+  scale: 2;
 }
 
 .wall {
