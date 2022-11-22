@@ -1,5 +1,20 @@
 const PACMAN_EL = document.querySelector("#pacman");
 const gameField = document.querySelector("#game").getClientRects()[0];
+
+const BLINKY_EL = document.querySelector("#blinky");
+const BLINKY_PICS = [
+  "../assets/images/ghosts/ghost-blinky-right.png",
+  "../assets/images/ghosts/ghost-blinky-down.png",
+  "../assets/images/ghosts/ghost-blinky-left.png",
+  "../assets/images/ghosts/ghost-blinky-up.png"
+]
+BLINKY_EL.style.top = "100px";
+BLINKY_EL.style.left = "100px";
+
+let blinkyXY = [100, 100];
+let blinkyDirection = 2;
+BLINKY_EL.style.backgroundImage = `url("${BLINKY_PICS[0]}")`;
+
 let velocityX = 1;
 let velocityY = 0;
 let positionX = 100;
@@ -29,12 +44,15 @@ function movePacMan() {
 }
 function update() {
   movePacMan();
+  moveGhost(blinkyDirection, blinkyXY, BLINKY_EL);
   for (i in squares) {
     if (squares[i].classList.contains("wall")) {
       checkCollision(squares[i]);
+      randomCollision(BLINKY_EL, squares[i], blinkyDirection, blinkyXY, BLINKY_PICS);
     }
   }
   checkDots();
+  requestAnimationFrame(update);
 }
 
 setInterval(animate, 500);
@@ -104,17 +122,62 @@ function animate() {
 
 function checkDots() {
   for(i in squares) {
-    if(squares[i].classList.contains("pac-dot")) {
-      if(PACMAN_EL.getClientRects()[0].x < squares[i].getClientRects()[0].x + squares[i].getClientRects()[0].width &&
+    if((squares[i].classList.contains("pac-dot")) &&
+      (PACMAN_EL.getClientRects()[0].x < squares[i].getClientRects()[0].x + squares[i].getClientRects()[0].width &&
     PACMAN_EL.getClientRects()[0].x + PACMAN_EL.getClientRects()[0].width > squares[i].getClientRects()[0].x &&
     PACMAN_EL.getClientRects()[0].y < squares[i].getClientRects()[0].y + squares[i].getClientRects()[0].height &&
-    PACMAN_EL.getClientRects()[0].y + PACMAN_EL.getClientRects()[0].height > squares[i].getClientRects()[0].y){
+    PACMAN_EL.getClientRects()[0].y + PACMAN_EL.getClientRects()[0].height > squares[i].getClientRects()[0].y)){
       squares[i].classList.remove("pac-dot");
       score++;
       SCOREFIELD.innerText = `Score: ${score}`;
     }
-    }
+    
   }
 }
 
-setInterval(update, 16.67);
+function moveGhost(direction, ghostXY, ghost) {
+  switch(direction) {
+    case 0: ghostXY[0] += 1;
+            ghost.style.left = ghostXY[0] + "px";
+            break;
+    case 1: ghostXY[1] += 1;        
+            ghost.style.top = ghostXY[1] + "px";
+            break;
+    case 2: ghostXY[0] -= 1;
+            ghost.style.left = ghostXY[0] + "px";
+            break;
+    case 3: ghostXY[1] -= 1;
+            ghost.style.top = ghostXY[1] + "px";
+            break;
+  }
+}
+
+function randomCollision(ghost, target, direction, ghostXY, pics) {
+  if(ghost.getClientRects()[0].x <
+  target.getClientRects()[0].x + target.getClientRects()[0].width &&
+ghost.getClientRects()[0].x + ghost.getClientRects()[0].width >
+  target.getClientRects()[0].x &&
+ghost.getClientRects()[0].y <
+  target.getClientRects()[0].y + target.getClientRects()[0].height &&
+ghost.getClientRects()[0].y + ghost.getClientRects()[0].height >
+  target.getClientRects()[0].y) {
+    switch(direction) {
+      case 0: ghostXY[0] -= 30;
+              ghost.style.left = ghostXY[0] + "px";
+              break;
+      case 1: ghostXY[1] -= 30;        
+              ghost.style.top = ghostXY[1] + "px";
+              break;
+      case 2: ghostXY[0] += 30;
+              ghost.style.left = ghostXY[0] + "px";
+              break;
+      case 3: ghostXY[1] += 30;
+              ghost.style.top = ghostXY[1] + "px";
+              break;
+    }
+    direction += 1;
+    ghost.style.backgroundImage = `url("${pics[direction]}")`;
+  }
+}
+
+requestAnimationFrame(update);

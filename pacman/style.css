@@ -8,18 +8,12 @@ body {
   height: 800px;
   margin: auto;
 }
-#pacman {
-  align-self: center;
-  background-size: cover;
-  scale: 1.5;
-}
+
 
 .entity {
-  /*
-     * Using absolute positioning, we can position our entities
-     * within our game using the CSS properties `left` (x) and `top` (y).
-     */
+  background-size: cover;
   position: absolute;
+  scale: 1.5;
 }
 
 .grid {
@@ -38,13 +32,13 @@ body {
 
 .pac-dot {
   background-image: url("./assets/images/pellet/pellet.png");
-  scale: 2;
+  
   background-size: cover;
 }
 
 .wall {
   background-image: url("./assets/images/wall1.jpg");
-  background-size: cover;
+  background-size: contain;
 }
 
 .power-pellet {
