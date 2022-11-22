@@ -84,11 +84,7 @@ function createBoard() {
     }
   }
 
-  for (i in squares) {
-    if (squares[i].classList.contains("wall")) {
-      velocityX = 0;
-    }
-  }
+  
 }
 createBoard();
 //
