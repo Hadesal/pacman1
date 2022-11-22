@@ -7,11 +7,11 @@ body {
   width: 800px;
   height: 800px;
   margin: auto;
-  background-color: gray;
 }
 #pacman {
+  align-self: center;
   background-size: cover;
-  scale: 1.5;
+  scale: 1.2;
 }
 
 .entity {
@@ -28,6 +28,7 @@ body {
   width: 800px;
   height: 800px;
   border: solid black;
+  background-color: grey;
 }
 
 .grid div {
@@ -36,13 +37,14 @@ body {
 }
 
 .pac-dot {
-  background-color: green;
-  border: 5px solid white;
-  box-sizing: border-box;
+  background-image: url("./assets/images/pellet/pellet.png");
+  background-size: cover;
+  scale: 2;
 }
 
 .wall {
   background-image: url("./assets/images/wall1.jpg");
+  background-size: cover;
 }
 
 .power-pellet {
@@ -66,19 +68,12 @@ body {
   background-color: orange;
 }
 
-.pac-man {
-  background-color: yellow;
-  border-radius: 10px;
-}
-
 .scared-ghost {
   background-color: aquamarine;
 }
 
-.pellet {
-    background-image: url("Git Projects/TeamProjectPacman/Phil/pacman1/pacman/assets/images/pellet/pellet.png");
-}
-
-.wall {
-    background-image: url("Git Projects/TeamProjectPacman/Phil/pacman1/pacman/assets/images/wall.png");
+.score {
+  position: absolute;
+  top: 10px;
+  left: 10px;
 }
