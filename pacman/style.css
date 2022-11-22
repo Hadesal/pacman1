@@ -17,3 +17,11 @@ body {
      */
     position: absolute;
 }
+
+.pellet {
+    background-image: url("Git Projects/TeamProjectPacman/Phil/pacman1/pacman/assets/images/pellet/pellet.png");
+}
+
+.wall {
+    background-image: url("Git Projects/TeamProjectPacman/Phil/pacman1/pacman/assets/images/wall.png");
+}
