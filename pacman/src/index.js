@@ -80,6 +80,7 @@ function checkCollision() {
 
 function animate() {
   document.getElementById("pacman-img").src = pacmanImages[imageCount];
+  PACMAN_EL.style.scale = "0.5"
   imageCount++;
   if (pacmanImages.length == imageCount) {
     imageCount = 0;

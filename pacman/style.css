@@ -21,8 +21,8 @@ body {
 .grid {
   display: flex;
   flex-wrap: wrap;
-  width: 560px;
-  height: 560px;
+  width: 800px;
+  height: 800px;
   border: solid black;
 }
 
