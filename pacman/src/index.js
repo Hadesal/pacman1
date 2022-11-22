@@ -79,4 +79,3 @@ function animate() {
 }
 
 setInterval(update, 16.67);
-console.log(PACMAN_EL.getClientRects()[0].x);
