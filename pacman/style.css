@@ -9,6 +9,10 @@ body {
   margin: auto;
   background-color: gray;
 }
+#pacman {
+  background-size: cover;
+  scale: 1.5;
+}
 
 .entity {
   /*

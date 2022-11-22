@@ -10,11 +10,9 @@ let pacmanImages = [
   "./assets/images/pacman/pacman-1.png",
   "./assets/images/pacman/pacman-2.png",
 ];
-
-const PACMAN_SOURCE = PACMAN_EL.querySelector("img").src;
-const PACMAN_1 = "../assets/images/pacman/pacman-1.png";
-const PACMAN_2 = "../assets/images/pacman/pacman-2.png";
-const PACMAN_3 = "../assets/images/pacman/pacman-0.png";
+const PACMAN_1 = "./assets/images/pacman/pacman-1.png";
+const PACMAN_2 = "./assets/images/pacman/pacman-2.png";
+const PACMAN_3 = "./assets/images/pacman/pacman-0.png";
 
 let imageCount = 0;
 function movePacMan() {
@@ -79,8 +77,7 @@ function checkCollision() {
 }
 
 function animate() {
-  document.getElementById("pacman-img").src = pacmanImages[imageCount];
-  PACMAN_EL.style.scale = "0.5"
+  PACMAN_EL.style.backgroundImage = `url("${pacmanImages[imageCount]}")`;
   imageCount++;
   if (pacmanImages.length == imageCount) {
     imageCount = 0;

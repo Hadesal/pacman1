@@ -64,7 +64,7 @@ const layout = [
   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 ];
 const squares = [];
-
+const width = 40;
 //create your board
 function createBoard() {
   for (let i = 0; i < layout.length; i++) {
@@ -83,12 +83,7 @@ function createBoard() {
       squares[i].classList.add("power-pellet");
     }
   }
-
-  for (i in squares) {
-    if (squares[i].classList.contains("wall")) {
-      velocityX = 0;
-    }
-  }
 }
+
 createBoard();
 //
