@@ -1,4 +1,5 @@
 const PACMAN_EL = document.querySelector("#pacman");
+const gameField = document.querySelector("#game").getClientRects()[0];
 let velocityX = 1;
 let velocityY = 0;
 let positionX = 0;
@@ -16,12 +17,14 @@ const PACMAN_2 = "../assets/images/pacman/pacman-2.png";
 const PACMAN_3 = "../assets/images/pacman/pacman-0.png";
 
 let imageCount = 0;
-
-function update() {
+function movePacMan() {
   positionX += velocityX;
   PACMAN_EL.style.left = positionX + "px";
   positionY += velocityY;
   PACMAN_EL.style.top = positionY + "px";
+}
+function update() {
+  movePacMan();
   checkCollision();
 }
 
@@ -53,32 +56,22 @@ document.addEventListener("keydown", function () {
 });
 
 function checkCollision() {
-  if (
-    PACMAN_EL.getClientRects()[0].y <=
-    document.querySelector("#game").getClientRects()[0].y
-  ) {
+  if (PACMAN_EL.getClientRects()[0].y <= gameField.y) {
     positionY += 1;
     PACMAN_EL.style.top = positionY + "px";
   } else if (
     PACMAN_EL.getClientRects()[0].y >=
-    document.querySelector("#game").getClientRects()[0].y +
-      document.querySelector("#game").getClientRects()[0].height -
-      PACMAN_EL.getClientRects()[0].height
+    gameField.y + gameField.height - PACMAN_EL.getClientRects()[0].height
   ) {
     positionY -= 1;
     PACMAN_EL.style.top = positionY + "px";
   }
-  if (
-    PACMAN_EL.getClientRects()[0].x <=
-    document.querySelector("#game").getClientRects()[0].x
-  ) {
+  if (PACMAN_EL.getClientRects()[0].x <= gameField.x) {
     positionX += 1;
     PACMAN_EL.style.left = positionX + "px";
   } else if (
     PACMAN_EL.getClientRects()[0].x >=
-    document.querySelector("#game").getClientRects()[0].width +
-      document.querySelector("#game").getClientRects()[0].x -
-      PACMAN_EL.getClientRects()[0].width
+    gameField.width + gameField.x - PACMAN_EL.getClientRects()[0].width
   ) {
     positionX -= 1;
     PACMAN_EL.style.left = positionX + "px";
