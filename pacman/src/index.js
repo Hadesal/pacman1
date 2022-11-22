@@ -50,19 +50,24 @@ document.addEventListener("keydown", function() {
 })
 
 function checkCollision() {
-    if(PACMAN_EL.getClientRects()[0].y <= 0 ) {
+    if(PACMAN_EL.getClientRects()[0].y <= document.querySelector("#game").getClientRects()[0].y ) {
         positionY += 1;
         PACMAN_EL.style.top = positionY + "px";
     }
-    else if(PACMAN_EL.getClientRects()[0].y >= 732 ) {
+    else if(PACMAN_EL.getClientRects()[0].y >= document.querySelector("#game").getClientRects()[0].y + 
+    document.querySelector("#game").getClientRects()[0].height - 
+    PACMAN_EL.getClientRects()[0].height ) {
         positionY -= 1;
         PACMAN_EL.style.top = positionY + "px";
     }
-    if(PACMAN_EL.getClientRects()[0].x <= 523 ) {
+    if(PACMAN_EL.getClientRects()[0].x <= document.querySelector("#game").getClientRects()[0].x ) {
         positionX += 1;
         PACMAN_EL.style.left = positionX + "px";
     }
-    else if(PACMAN_EL.getClientRects()[0].x >= 1259 ) {
+    else if(PACMAN_EL.getClientRects()[0].x >=
+    document.querySelector("#game").getClientRects()[0].width + 
+    document.querySelector("#game").getClientRects()[0].x - 
+    PACMAN_EL.getClientRects()[0].width ) {
         positionX -= 1;
         PACMAN_EL.style.left = positionX + "px";
     }
@@ -77,4 +82,4 @@ function animate() {
         }
 
 setInterval(update, 16.67);
-console.log(PACMAN_EL.getClientRects()[0].x);
+console.log(document.querySelector("#game").getClientRects()[0].y + document.querySelector("#game").getClientRects()[0].height - PACMAN_EL.getClientRects()[0].height);
