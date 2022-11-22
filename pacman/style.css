@@ -9,6 +9,10 @@ body {
   margin: auto;
   background-color: gray;
 }
+#pacman {
+  background-size: cover;
+  scale: 1.5;
+}
 
 .entity {
   /*
@@ -21,8 +25,8 @@ body {
 .grid {
   display: flex;
   flex-wrap: wrap;
-  width: 560px;
-  height: 560px;
+  width: 800px;
+  height: 800px;
   border: solid black;
 }
 
@@ -38,7 +42,7 @@ body {
 }
 
 .wall {
-  background-color: blue;
+  background-image: url("./assets/images/wall1.jpg");
 }
 
 .power-pellet {

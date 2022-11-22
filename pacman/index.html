@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <title>Pac-Man</title>
-        <link rel="stylesheet" href="./style.css" />
-        <script src="./src/Board.js" defer></script>
-    </head>
-    <body>
-        <main id="game">
-            <div id="pacman" class="entity">
-                <img src="./assets/images/pacman/pacman-2.png" />
-            </div>
-        </main>
-    </body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Pac-Man</title>
+    <link rel="stylesheet" href="./style.css" />
+    <script src="./src/index.js" defer></script>
+  </head>
+  <body>
+    <main id="game">
+      <div class="grid">
+        <div id="pacman" class="entity"></div>
+      </div>
+    </main>
+    <script src="./src/wall.js"></script>
+  </body>
 </html>
