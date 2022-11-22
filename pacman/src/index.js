@@ -115,4 +115,4 @@ function checkDots() {
 }
 
 setInterval(update, 16.67);
-console.log(document.querySelector("#game").getClientRects()[0].y + document.querySelector("#game").getClientRects()[0].height - PACMAN_EL.getClientRects()[0].height);
+
