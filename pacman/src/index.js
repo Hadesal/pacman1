@@ -8,14 +8,14 @@ const BLINKY_PICS = [
   "../assets/images/ghosts/ghost-blinky-left.png",
   "../assets/images/ghosts/ghost-blinky-up.png"
 ]
-BLINKY_EL.style.top = "100px";
-BLINKY_EL.style.left = "100px";
+BLINKY_EL.style.top = "200px";
+BLINKY_EL.style.left = "200px";
 
-let blinkyXY = [100, 100];
-let blinkyDirection = [1, 1];
+let blinkyXY = [200, 200];
+let blinkyDirection = [2, 2];
 BLINKY_EL.style.backgroundImage = `url("${BLINKY_PICS[0]}")`;
 
-let pacmanDirection = [1, 0];
+let pacmanDirection = [2, 0];
 let pacmanXY = [100, 100];
 
 let score = 0;
@@ -42,6 +42,7 @@ function movePacMan() {
 }
 function update() {
   movePacMan();
+  followPacman(BLINKY_EL, blinkyDirection);
   moveGhost(blinkyDirection, blinkyXY, BLINKY_EL);
   for (i in squares) {
     if (squares[i].classList.contains("wall")) {
@@ -149,19 +150,29 @@ function moveGhost(direction, ghostXY, ghost) {
 
 }
 
-function randomCollision(ghost, target, direction, ghostXY, pics) {
-  if(ghost.getClientRects()[0].x <
-  target.getClientRects()[0].x + target.getClientRects()[0].width &&
-ghost.getClientRects()[0].x + ghost.getClientRects()[0].width >
-  target.getClientRects()[0].x &&
-ghost.getClientRects()[0].y <
-  target.getClientRects()[0].y + target.getClientRects()[0].height &&
-ghost.getClientRects()[0].y + ghost.getClientRects()[0].height >
-  target.getClientRects()[0].y) {
-    
+
+function followPacman(entity, direction) {
+    const xDifference = entity.getClientRects()[0].x - PACMAN_EL.getClientRects()[0].x;
+    const yDifference = entity.getClientRects()[0].y - PACMAN_EL.getClientRects()[0].y;
+    if(xDifference > 10) {
+      direction[0] = -2;
+    }
+    else if(xDifference < 10) {
+      direction[0] = 2;
+    }
+    else {
+      direction[0] = 0;
+    }
+    if(yDifference > 10) {
+      direction[1] = -2;
+    }
+    else if(yDifference < 10) {
+      direction[1] = 2;
+    }
+    else {
+      direction[1] = 0;
+    }
 }
-}
+
 requestAnimationFrame(update);
 
-console.log(BLINKY_EL.getClientRects()[0].x - PACMAN_EL.getClientRects()[0].x);
-console.log(BLINKY_EL.getClientRects()[0].y - PACMAN_EL.getClientRects()[0].y);
