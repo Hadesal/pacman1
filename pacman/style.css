@@ -9,7 +9,6 @@ body {
   margin: auto;
 }
 
-
 .entity {
   background-size: cover;
   position: absolute;
@@ -32,8 +31,8 @@ body {
 
 .pac-dot {
   background-image: url("./assets/images/pellet/pellet.png");
-  
   background-size: cover;
+  scale: 2;
 }
 
 .wall {
