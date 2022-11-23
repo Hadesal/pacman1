@@ -12,13 +12,11 @@ BLINKY_EL.style.top = "100px";
 BLINKY_EL.style.left = "100px";
 
 let blinkyXY = [100, 100];
-let blinkyDirection = 2;
+let blinkyDirection = [1, 1];
 BLINKY_EL.style.backgroundImage = `url("${BLINKY_PICS[0]}")`;
 
-let velocityX = 1;
-let velocityY = 0;
-let positionX = 100;
-let positionY = 100;
+let velocityXY = [1, 0];
+let positionXY = [100, 100];
 
 let score = 0;
 const SCOREFIELD = document.createElement("span");
@@ -37,10 +35,10 @@ const PACMAN_3 = "./assets/images/pacman/pacman-0.png";
 
 let imageCount = 0;
 function movePacMan() {
-  positionX += velocityX;
-  PACMAN_EL.style.left = positionX + "px";
-  positionY += velocityY;
-  PACMAN_EL.style.top = positionY + "px";
+  positionXY[0] += velocityXY[0];
+  PACMAN_EL.style.left = positionXY[0] + "px";
+  positionXY[1] += velocityXY[1];
+  PACMAN_EL.style.top = positionXY[1] + "px";
 }
 function update() {
   movePacMan();
@@ -48,7 +46,6 @@ function update() {
   for (i in squares) {
     if (squares[i].classList.contains("wall")) {
       checkCollision(squares[i]);
-      randomCollision(BLINKY_EL, squares[i], blinkyDirection, blinkyXY, BLINKY_PICS);
     }
   }
   checkDots();
@@ -60,23 +57,23 @@ setInterval(animate, 100);
 document.addEventListener("keydown", function () {
   switch (event.key) {
     case "ArrowDown":
-      velocityY = 2;
-      velocityX = 0;
+      velocityXY[1] = 2;
+      velocityXY[0] = 0;
       PACMAN_EL.style.transform = "rotate(90deg)";
       break;
     case "ArrowUp":
-      velocityY = -2;
-      velocityX = 0;
+      velocityXY[1] = -2;
+      velocityXY[0] = 0;
       PACMAN_EL.style.transform = "rotate(-90deg)";
       break;
     case "ArrowLeft":
-      velocityX = -2;
-      velocityY = 0;
+      velocityXY[0] = -2;
+      velocityXY[1] = 0;
       PACMAN_EL.style.transform = "rotate(180deg)";
       break;
     case "ArrowRight":
-      velocityX = 2;
-      velocityY = 0;
+      velocityXY[0] = 2;
+      velocityXY[1] = 0;
       PACMAN_EL.style.transform = "rotate(0deg)";
       break;
   }
@@ -93,19 +90,19 @@ function checkCollision(target) {
     PACMAN_EL.getClientRects()[0].y + PACMAN_EL.getClientRects()[0].height >
       target.getClientRects()[0].y
   ) {
-    if (velocityX > 0) {
-      positionX -= 2;
-      PACMAN_EL.style.left = positionX + "px";
-    } else if (velocityX < 0) {
-      positionX += 2;
-      PACMAN_EL.style.left = positionX + "px";
+    if (velocityXY[0] > 0) {
+      positionXY[0] -= 2;
+      PACMAN_EL.style.left = positionXY[0] + "px";
+    } else if (velocityXY[0] < 0) {
+      positionXY[0] += 2;
+      PACMAN_EL.style.left = positionXY[0] + "px";
     }
-    if (velocityY > 0) {
-      positionY -= 2;
-      PACMAN_EL.style.top = positionY + "px";
-    } else if (velocityY < 0) {
-      positionY += 2;
-      PACMAN_EL.style.top = positionY + "px";
+    if (velocityXY[1] > 0) {
+      positionXY[1] -= 2;
+      PACMAN_EL.style.top = positionXY[1] + "px";
+    } else if (velocityXY[1] < 0) {
+      positionXY[1] += 2;
+      PACMAN_EL.style.top = positionXY[1] + "px";
     }
   }
 }
@@ -144,20 +141,11 @@ function checkDots() {
 }
 
 function moveGhost(direction, ghostXY, ghost) {
-  switch(direction) {
-    case 0: ghostXY[0] += 1;
-            ghost.style.left = ghostXY[0] + "px";
-            break;
-    case 1: ghostXY[1] += 1;        
-            ghost.style.top = ghostXY[1] + "px";
-            break;
-    case 2: ghostXY[0] -= 1;
-            ghost.style.left = ghostXY[0] + "px";
-            break;
-    case 3: ghostXY[1] -= 1;
-            ghost.style.top = ghostXY[1] + "px";
-            break;
-  }
+  ghostXY[0] += direction[0];
+  ghostXY[1] += direction[1];
+  ghost.style.left = ghostXY[0] + "px";
+  ghost.style.top = ghostXY[1] + "px";
+
 }
 
 function randomCollision(ghost, target, direction, ghostXY, pics) {
@@ -169,23 +157,10 @@ ghost.getClientRects()[0].y <
   target.getClientRects()[0].y + target.getClientRects()[0].height &&
 ghost.getClientRects()[0].y + ghost.getClientRects()[0].height >
   target.getClientRects()[0].y) {
-    switch(direction) {
-      case 0: ghostXY[0] -= 30;
-              ghost.style.left = ghostXY[0] + "px";
-              break;
-      case 1: ghostXY[1] -= 30;        
-              ghost.style.top = ghostXY[1] + "px";
-              break;
-      case 2: ghostXY[0] += 30;
-              ghost.style.left = ghostXY[0] + "px";
-              break;
-      case 3: ghostXY[1] += 30;
-              ghost.style.top = ghostXY[1] + "px";
-              break;
-    }
-    direction += 1;
-    ghost.style.backgroundImage = `url("${pics[direction]}")`;
-  }
+    
 }
-
+}
 requestAnimationFrame(update);
+
+console.log(BLINKY_EL.getClientRects()[0].x - PACMAN_EL.getClientRects()[0].x);
+console.log(BLINKY_EL.getClientRects()[0].y - PACMAN_EL.getClientRects()[0].y);
