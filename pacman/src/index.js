@@ -8,15 +8,50 @@ const BLINKY_PICS = [
   "../assets/images/ghosts/ghost-blinky-left.png",
   "../assets/images/ghosts/ghost-blinky-up.png"
 ]
-BLINKY_EL.style.top = "200px";
-BLINKY_EL.style.left = "200px";
 
-let blinkyXY = [200, 200];
+let blinkyXY = [400, 400];
 let blinkyDirection = [0, 0];
 BLINKY_EL.style.backgroundImage = `url("${BLINKY_PICS[0]}")`;
 
-let pacmanDirection = [2, 0];
-let pacmanXY = [100, 100];
+const CLYDE_EL = document.querySelector("#clyde");
+const CLYDE_PICS = [
+  "../assets/images/ghosts/ghost-clyde-right.png",
+  "../assets/images/ghosts/ghost-clyde-down.png",
+  "../assets/images/ghosts/ghost-clyde-left.png",
+  "../assets/images/ghosts/ghost-clyde-up.png"
+]
+
+let clydeXY = [350, 400];
+let clydeDirection = [0, 0];
+CLYDE_EL.style.backgroundImage = `url("${CLYDE_PICS[0]}")`;
+
+const INKY_EL = document.querySelector("#inky");
+const INKY_PICS = [
+  "../assets/images/ghosts/ghost-inky-right.png",
+  "../assets/images/ghosts/ghost-inky-down.png",
+  "../assets/images/ghosts/ghost-inky-left.png",
+  "../assets/images/ghosts/ghost-inky-up.png"
+]
+
+let inkyXY = [420, 390];
+let inkyDirection = [0, 0];
+INKY_EL.style.backgroundImage = `url("${INKY_PICS[0]}")`;
+
+const PINKY_EL = document.querySelector("#pinky");
+const PINKY_PICS = [
+  "../assets/images/ghosts/ghost-pinky-right.png",
+  "../assets/images/ghosts/ghost-pinky-down.png",
+  "../assets/images/ghosts/ghost-pinky-left.png",
+  "../assets/images/ghosts/ghost-pinky-up.png"
+]
+
+let pinkyXY = [450, 400];
+let pinkyDirection = [0, 0];
+PINKY_EL.style.backgroundImage = `url("${PINKY_PICS[0]}")`;
+
+let pacmanDirection = [-2, 0];
+PACMAN_EL.style.transform = "rotate(180deg)";
+let pacmanXY = [400, 300];
 
 let score = 0;
 const SCOREFIELD = document.createElement("span");
@@ -43,11 +78,20 @@ function movePacMan() {
 function update() {
   movePacMan();
   followPacman(BLINKY_EL, blinkyDirection);
+  followPacman(CLYDE_EL, clydeDirection);
+  followPacman(INKY_EL, inkyDirection);
+  followPacman(PINKY_EL, pinkyDirection);
   moveGhost(blinkyDirection, blinkyXY, BLINKY_EL);
+  moveGhost(clydeDirection, clydeXY, CLYDE_EL);
+  moveGhost(inkyDirection, inkyXY, INKY_EL);
+  moveGhost(pinkyDirection, pinkyXY, PINKY_EL);
   for (i in squares) {
     if (squares[i].classList.contains("wall")) {
       checkCollision(PACMAN_EL, squares[i], pacmanXY, pacmanDirection);
       checkCollision(BLINKY_EL, squares[i], blinkyXY, blinkyDirection);
+      checkCollision(CLYDE_EL, squares[i], clydeXY, clydeDirection);
+      checkCollision(INKY_EL, squares[i], inkyXY, inkyDirection);
+      checkCollision(PINKY_EL, squares[i], pinkyXY, pinkyDirection);
     }
   }
   checkDots();
