@@ -12,7 +12,7 @@ BLINKY_EL.style.top = "200px";
 BLINKY_EL.style.left = "200px";
 
 let blinkyXY = [200, 200];
-let blinkyDirection = [2, 2];
+let blinkyDirection = [0, 0];
 BLINKY_EL.style.backgroundImage = `url("${BLINKY_PICS[0]}")`;
 
 let pacmanDirection = [2, 0];
@@ -51,7 +51,7 @@ function update() {
     }
   }
   checkDots();
-  requestAnimationFrame(update);
+  setTimeout(update, 16.67);
 }
 
 setInterval(animate, 100);
@@ -92,18 +92,18 @@ function checkCollision(entity, target, positionXY, direction) {
     entity.getClientRects()[0].y + entity.getClientRects()[0].height >
       target.getClientRects()[0].y
   ) {
-    if (direction[0] > 0) {
-      positionXY[0] -= 2;
+    if (direction[0] > 0 ) {
+      positionXY[0] -= 4;
       entity.style.left = positionXY[0] + "px";
     } else if (direction[0] < 0) {
-      positionXY[0] += 2;
+      positionXY[0] += 4;
       entity.style.left = positionXY[0] + "px";
     }
     if (direction[1] > 0) {
-      positionXY[1] -= 2;
+      positionXY[1] -= 3;
       entity.style.top = positionXY[1] + "px";
     } else if (direction[1] < 0) {
-      positionXY[1] += 2;
+      positionXY[1] += 3;
       entity.style.top = positionXY[1] + "px";
     }
   }
@@ -152,27 +152,54 @@ function moveGhost(direction, ghostXY, ghost) {
 
 
 function followPacman(entity, direction) {
+    console.log("follow");
     const xDifference = entity.getClientRects()[0].x - PACMAN_EL.getClientRects()[0].x;
     const yDifference = entity.getClientRects()[0].y - PACMAN_EL.getClientRects()[0].y;
-    if(xDifference > 10) {
-      direction[0] = -2;
+    if(Math.abs(xDifference) < Math.abs(yDifference) ) {
+      if(Math.abs(xDifference) < 10) {
+        direction[0] = 0;
+        if(yDifference > 0) {
+          direction[1] = -2;
+        }
+        else if(yDifference < 0) {
+          direction[1] = 2;
+        }
+      else {
+      //direction[1] = 0;
+      if(xDifference > 0) {
+        direction[0] = -2;
+      }
+      else if(xDifference < 0) {
+        direction[0] = 2;
+      }
+      
+      }
     }
-    else if(xDifference < 10) {
-      direction[0] = 2;
     }
-    else {
-      direction[0] = 0;
+    else if(Math.abs(xDifference) > Math.abs(yDifference)) {
+      if(Math.abs(yDifference) < 10) {
+        direction[1] = 0;
+        if(xDifference > 0) {
+          direction[0] = -2;
+        }
+        else if(xDifference < 0) {
+          direction[0] = 2;
+        }
+        
+      }
+      else {
+      //direction[0] = 0;
+      if(yDifference > 0) {
+        direction[1] = -2;
+      }
+      else if(yDifference < 0) {
+        direction[1] = 2;
+      }
+      
+      }
     }
-    if(yDifference > 10) {
-      direction[1] = -2;
-    }
-    else if(yDifference < 10) {
-      direction[1] = 2;
-    }
-    else {
-      direction[1] = 0;
-    }
+    
 }
 
-requestAnimationFrame(update);
+setTimeout(update, 1000/60);
 
