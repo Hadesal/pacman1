@@ -15,8 +15,8 @@ let blinkyXY = [100, 100];
 let blinkyDirection = [1, 1];
 BLINKY_EL.style.backgroundImage = `url("${BLINKY_PICS[0]}")`;
 
-let velocityXY = [1, 0];
-let positionXY = [100, 100];
+let pacmanDirection = [1, 0];
+let pacmanXY = [100, 100];
 
 let score = 0;
 const SCOREFIELD = document.createElement("span");
@@ -35,17 +35,18 @@ const PACMAN_3 = "./assets/images/pacman/pacman-0.png";
 
 let imageCount = 0;
 function movePacMan() {
-  positionXY[0] += velocityXY[0];
-  PACMAN_EL.style.left = positionXY[0] + "px";
-  positionXY[1] += velocityXY[1];
-  PACMAN_EL.style.top = positionXY[1] + "px";
+  pacmanXY[0] += pacmanDirection[0];
+  PACMAN_EL.style.left = pacmanXY[0] + "px";
+  pacmanXY[1] += pacmanDirection[1];
+  PACMAN_EL.style.top = pacmanXY[1] + "px";
 }
 function update() {
   movePacMan();
   moveGhost(blinkyDirection, blinkyXY, BLINKY_EL);
   for (i in squares) {
     if (squares[i].classList.contains("wall")) {
-      checkCollision(squares[i]);
+      checkCollision(PACMAN_EL, squares[i], pacmanXY, pacmanDirection);
+      checkCollision(BLINKY_EL, squares[i], blinkyXY, blinkyDirection);
     }
   }
   checkDots();
@@ -57,52 +58,52 @@ setInterval(animate, 100);
 document.addEventListener("keydown", function () {
   switch (event.key) {
     case "ArrowDown":
-      velocityXY[1] = 2;
-      velocityXY[0] = 0;
+      pacmanDirection[1] = 2;
+      pacmanDirection[0] = 0;
       PACMAN_EL.style.transform = "rotate(90deg)";
       break;
     case "ArrowUp":
-      velocityXY[1] = -2;
-      velocityXY[0] = 0;
+      pacmanDirection[1] = -2;
+      pacmanDirection[0] = 0;
       PACMAN_EL.style.transform = "rotate(-90deg)";
       break;
     case "ArrowLeft":
-      velocityXY[0] = -2;
-      velocityXY[1] = 0;
+      pacmanDirection[0] = -2;
+      pacmanDirection[1] = 0;
       PACMAN_EL.style.transform = "rotate(180deg)";
       break;
     case "ArrowRight":
-      velocityXY[0] = 2;
-      velocityXY[1] = 0;
+      pacmanDirection[0] = 2;
+      pacmanDirection[1] = 0;
       PACMAN_EL.style.transform = "rotate(0deg)";
       break;
   }
 });
 
-function checkCollision(target) {
+function checkCollision(entity, target, positionXY, direction) {
   if (
-    PACMAN_EL.getClientRects()[0].x <
+    entity.getClientRects()[0].x <
       target.getClientRects()[0].x + target.getClientRects()[0].width &&
-    PACMAN_EL.getClientRects()[0].x + PACMAN_EL.getClientRects()[0].width >
+    entity.getClientRects()[0].x + entity.getClientRects()[0].width >
       target.getClientRects()[0].x &&
-    PACMAN_EL.getClientRects()[0].y <
+    entity.getClientRects()[0].y <
       target.getClientRects()[0].y + target.getClientRects()[0].height &&
-    PACMAN_EL.getClientRects()[0].y + PACMAN_EL.getClientRects()[0].height >
+    entity.getClientRects()[0].y + entity.getClientRects()[0].height >
       target.getClientRects()[0].y
   ) {
-    if (velocityXY[0] > 0) {
+    if (direction[0] > 0) {
       positionXY[0] -= 2;
-      PACMAN_EL.style.left = positionXY[0] + "px";
-    } else if (velocityXY[0] < 0) {
+      entity.style.left = positionXY[0] + "px";
+    } else if (direction[0] < 0) {
       positionXY[0] += 2;
-      PACMAN_EL.style.left = positionXY[0] + "px";
+      entity.style.left = positionXY[0] + "px";
     }
-    if (velocityXY[1] > 0) {
+    if (direction[1] > 0) {
       positionXY[1] -= 2;
-      PACMAN_EL.style.top = positionXY[1] + "px";
-    } else if (velocityXY[1] < 0) {
+      entity.style.top = positionXY[1] + "px";
+    } else if (direction[1] < 0) {
       positionXY[1] += 2;
-      PACMAN_EL.style.top = positionXY[1] + "px";
+      entity.style.top = positionXY[1] + "px";
     }
   }
 }
