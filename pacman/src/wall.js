@@ -69,12 +69,16 @@ const squares = [];
 function createBoard() {
   for (let i = 0; i < layout.length; i++) {
     const square = document.createElement("div");
+    const img = document.createElement("img");
+
     grid.appendChild(square);
     squares.push(square);
 
     //add layout to the board
     if (layout[i] === 0) {
-      squares[i].classList.add("pac-dot");
+      img.classList.add("pac-dot");
+      img.id = "imgPac";
+      square.appendChild(img);
     } else if (layout[i] === 1) {
       squares[i].classList.add("wall");
     } else if (layout[i] === 2) {
