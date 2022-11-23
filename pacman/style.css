@@ -1,5 +1,38 @@
+/* Headline */
+.Headline {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 28%;
+  height: 28%;
+}
+.Pacman-img{
+  float: left;
+  width: 300px;
+  height: 300px;
+  margin-top: 350px;
+  margin-left: 150px;
+}
+.Ghost-img{
+  margin-top: 350px;
+  margin-right: 125px;
+  float:right;
+  width: 350px;
+  height: 350px;
+}
+
+.score{
+  color: yellow;
+  margin-top: 280px;
+  margin-left: 100px;
+  font-size: 40px ;
+}
+
+
 body {
   margin: 0;
+  background-color: black;
+ 
 }
 
 #game {
@@ -25,14 +58,20 @@ body {
 }
 
 .grid div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 20px;
   height: 20px;
 }
 
 .pac-dot {
-  background-image: url("./assets/images/pellet/pellet.png");
+  /* background-image: url("./assets/images/pellet/pellet.png");
   background-size: cover;
-  scale: 2;
+  scale: 2; */
+  content: url("./assets/images/pellet/pellet.png");
+  max-width: 10px;
+  max-height: 10px;
 }
 
 .wall {
@@ -70,3 +109,4 @@ body {
   top: 10px;
   left: 10px;
 }
+

@@ -118,23 +118,23 @@ function animate() {
   }
   return imageCount;
 }
-
+const img = document.getElementById("imgPac");
 function checkDots() {
   for (i in squares) {
-    if (squares[i].classList.contains("pac-dot")) {
+    const pacDot = squares[i].querySelector("img.pac-dot");
+
+    if (pacDot) {
       if (
         PACMAN_EL.getClientRects()[0].x <
-          squares[i].getClientRects()[0].x +
-            squares[i].getClientRects()[0].width &&
+          pacDot.getClientRects()[0].x + pacDot.getClientRects()[0].width &&
         PACMAN_EL.getClientRects()[0].x + PACMAN_EL.getClientRects()[0].width >
-          squares[i].getClientRects()[0].x &&
+          pacDot.getClientRects()[0].x &&
         PACMAN_EL.getClientRects()[0].y <
-          squares[i].getClientRects()[0].y +
-            squares[i].getClientRects()[0].height &&
+          pacDot.getClientRects()[0].y + pacDot.getClientRects()[0].height &&
         PACMAN_EL.getClientRects()[0].y + PACMAN_EL.getClientRects()[0].height >
-          squares[i].getClientRects()[0].y
+          pacDot.getClientRects()[0].y
       ) {
-        squares[i].classList.remove("pac-dot");
+        pacDot.classList.remove("pac-dot");
         score++;
         SCOREFIELD.innerText = `Score: ${score}`;
       }
