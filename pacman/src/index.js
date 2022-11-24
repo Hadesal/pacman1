@@ -54,10 +54,29 @@ PACMAN_EL.style.transform = "rotate(180deg)";
 let pacmanXY = [400, 300];
 
 let score = 0;
+
 const SCOREFIELD = document.createElement("span");
 SCOREFIELD.innerText = `Score: ${score}`;
 SCOREFIELD.classList.add("score");
 document.body.appendChild(SCOREFIELD);
+
+
+
+
+let highscore = 0
+
+const headline = document.getElementById("headline")
+
+const highscoreField = document.createElement("span");
+highscoreField.innerText = `Highscore: ${localStorage.getItem('highscore')}`;
+highscoreField.classList.add("highscore");
+document.body.appendChild(highscoreField);
+
+
+
+
+
+
 
 let pacmanImages = [
   "./assets/images/pacman/pacman-0.png",
@@ -181,11 +200,18 @@ function checkDots() {
         pacDot.classList.remove("pac-dot");
         score++;
         SCOREFIELD.innerText = `Score: ${score}`;
+        
       }
     }
   }
-}
+  if (score > highscore){
+         localStorage.setItem('highscore',score)
 
+        }
+        
+}
+console.log(localStorage.getItem("highscore")
+)
 function moveGhost(direction, ghostXY, ghost) {
   ghostXY[0] += direction[0];
   ghostXY[1] += direction[1];
@@ -196,7 +222,6 @@ function moveGhost(direction, ghostXY, ghost) {
 
 
 function followPacman(entity, direction) {
-    console.log("follow");
     const xDifference = entity.getClientRects()[0].x - PACMAN_EL.getClientRects()[0].x;
     const yDifference = entity.getClientRects()[0].y - PACMAN_EL.getClientRects()[0].y;
     if(Math.abs(xDifference) < Math.abs(yDifference) ) {
