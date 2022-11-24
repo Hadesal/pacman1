@@ -51,7 +51,7 @@ PINKY_EL.style.backgroundImage = `url("${PINKY_PICS[0]}")`;
 
 let pacmanDirection = [-2, 0];
 PACMAN_EL.style.transform = "rotate(180deg)";
-let pacmanXY = [400, 300];
+let pacmanXY = [400, 240];
 
 let score = 0;
 const SCOREFIELD = document.createElement("span");
@@ -77,10 +77,7 @@ function movePacMan() {
 }
 function update() {
   movePacMan();
-  followPacman(BLINKY_EL, blinkyDirection);
-  followPacman(CLYDE_EL, clydeDirection);
-  followPacman(INKY_EL, inkyDirection);
-  followPacman(PINKY_EL, pinkyDirection);
+  
   moveGhost(blinkyDirection, blinkyXY, BLINKY_EL);
   moveGhost(clydeDirection, clydeXY, CLYDE_EL);
   moveGhost(inkyDirection, inkyXY, INKY_EL);
@@ -99,6 +96,13 @@ function update() {
 }
 
 setInterval(animate, 100);
+
+setInterval(function () {
+  followPacman(BLINKY_EL, blinkyDirection);
+  followPacman(CLYDE_EL, clydeDirection);
+  followPacman(INKY_EL, inkyDirection);
+  followPacman(PINKY_EL, pinkyDirection);
+}, 1000);
 
 document.addEventListener("keydown", function () {
   switch (event.key) {
@@ -144,10 +148,10 @@ function checkCollision(entity, target, positionXY, direction) {
       entity.style.left = positionXY[0] + "px";
     }
     if (direction[1] > 0) {
-      positionXY[1] -= 3;
+      positionXY[1] -= 4;
       entity.style.top = positionXY[1] + "px";
     } else if (direction[1] < 0) {
-      positionXY[1] += 3;
+      positionXY[1] += 4;
       entity.style.top = positionXY[1] + "px";
     }
   }
@@ -196,20 +200,11 @@ function moveGhost(direction, ghostXY, ghost) {
 
 
 function followPacman(entity, direction) {
-    console.log("follow");
     const xDifference = entity.getClientRects()[0].x - PACMAN_EL.getClientRects()[0].x;
     const yDifference = entity.getClientRects()[0].y - PACMAN_EL.getClientRects()[0].y;
-    if(Math.abs(xDifference) < Math.abs(yDifference) ) {
-      if(Math.abs(xDifference) < 10) {
-        direction[0] = 0;
-        if(yDifference > 0) {
-          direction[1] = -2;
-        }
-        else if(yDifference < 0) {
-          direction[1] = 2;
-        }
-      else {
-      //direction[1] = 0;
+    if(Math.abs(xDifference) > Math.abs(yDifference) ) {
+      
+      direction[1] = 0;
       if(xDifference > 0) {
         direction[0] = -2;
       }
@@ -218,30 +213,19 @@ function followPacman(entity, direction) {
       }
       
       }
-    }
-    }
-    else if(Math.abs(xDifference) > Math.abs(yDifference)) {
-      if(Math.abs(yDifference) < 10) {
-        direction[1] = 0;
-        if(xDifference > 0) {
-          direction[0] = -2;
-        }
-        else if(xDifference < 0) {
-          direction[0] = 2;
-        }
-        
-      }
-      else {
-      //direction[0] = 0;
+    
+    
+    else if(Math.abs(xDifference) < Math.abs(yDifference))
+      {direction[0] = 0;
       if(yDifference > 0) {
         direction[1] = -2;
       }
       else if(yDifference < 0) {
         direction[1] = 2;
-      }
+      }}
       
-      }
-    }
+      
+    
     
 }
 
