@@ -78,7 +78,6 @@ function movePacMan() {
   PACMAN_EL.style.top = pacmanXY[1] + "px";
 }
 function update() {
-  movePacMan();
   followPacman(BLINKY_EL, blinkyDirection);
   followPacman(CLYDE_EL, clydeDirection);
   followPacman(INKY_EL, inkyDirection);
@@ -107,28 +106,27 @@ function update() {
       checkPowerDots(squares[i]);
     }
   }
-  checkDots();
 }
 
 document.addEventListener("keydown", function (e) {
   switch (e.key) {
     case "ArrowDown":
-      pacmanDirection[1] = 2;
+      pacmanDirection[1] = 4;
       pacmanDirection[0] = 0;
       PACMAN_EL.style.transform = "rotate(90deg)";
       break;
     case "ArrowUp":
-      pacmanDirection[1] = -2;
+      pacmanDirection[1] = -4;
       pacmanDirection[0] = 0;
       PACMAN_EL.style.transform = "rotate(-90deg)";
       break;
     case "ArrowLeft":
-      pacmanDirection[0] = -2;
+      pacmanDirection[0] = -4;
       pacmanDirection[1] = 0;
       PACMAN_EL.style.transform = "rotate(180deg)";
       break;
     case "ArrowRight":
-      pacmanDirection[0] = 2;
+      pacmanDirection[0] = 4;
       pacmanDirection[1] = 0;
 
       PACMAN_EL.style.transform = "rotate(0deg)";
@@ -148,10 +146,10 @@ function checkCollision(entity, target, positionXY, direction) {
       target.getClientRects()[0].y
   ) {
     if (direction[0] > 0) {
-      positionXY[0] -= 4;
+      positionXY[0] -= 3;
       entity.style.left = positionXY[0] + "px";
     } else if (direction[0] < 0) {
-      positionXY[0] += 4;
+      positionXY[0] += 3;
       entity.style.left = positionXY[0] + "px";
     }
     if (direction[1] > 0) {
@@ -175,10 +173,10 @@ function checkExitColl(exit) {
       exit.getClientRects()[0].y
   ) {
     if (exit.classList.contains("left-exit")) {
-      positionX = enterRight.getClientRects()[0].x - 250;
+      pacmanXY[0] = enterRight.getClientRects()[0].x - 250;
     }
     if (exit.classList.contains("right-exit")) {
-      positionX = enterLeft.getClientRects()[0].x - 155;
+      pacmanXY[0] = enterLeft.getClientRects()[0].x - 155;
     }
   }
 }
@@ -233,7 +231,6 @@ function moveGhost(direction, ghostXY, ghost) {
 }
 
 function followPacman(entity, direction) {
-  console.log("follow");
   const xDifference =
     entity.getClientRects()[0].x - PACMAN_EL.getClientRects()[0].x;
   const yDifference =
@@ -273,8 +270,6 @@ function followPacman(entity, direction) {
   }
 }
 
-setTimeout(update, 1000 / 60);
-
 function animate() {
   PACMAN_EL.style.backgroundImage = `url("${pacmanImages[imageCount]}")`;
 
@@ -293,6 +288,8 @@ function checkWin() {
     document.removeEventListener("keydown");
   }
 }
+setInterval(update, 16);
+setInterval(movePacMan, 16);
+setInterval(checkDots, 16);
 setInterval(checkWin, 100);
 setInterval(animate, 100);
-setInterval(update, 16.666);
