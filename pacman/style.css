@@ -1,5 +1,45 @@
+/* Headline */
+.Headline {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 28%;
+  height: 28%;
+}
+.Pacman-img {
+  float: left;
+  width: 200px;
+  height: 200px;
+  margin-top: 350px;
+  margin-left: 100px;
+}
+.Ghost-img {
+  margin-top: 350px;
+  margin-right: 100px;
+  float: right;
+  width: 250px;
+  height: 250px;
+}
+
+.score {
+  color: yellow;
+  margin-top: 280px;
+  margin-left: 100px;
+  font-size: 40px;
+}
+
+.highscore {
+  color: red;
+  font-size: 40px;
+
+  left: 100px;
+  bottom: 200px;
+  position: absolute;
+}
+
 body {
   margin: 0;
+  background-color: rgb(0, 0, 0);
 }
 
 #game {
@@ -8,18 +48,12 @@ body {
   height: 800px;
   margin: auto;
 }
-#pacman {
-  align-self: center;
-  background-size: cover;
-  scale: 1.2;
-}
 
 .entity {
-  /*
-     * Using absolute positioning, we can position our entities
-     * within our game using the CSS properties `left` (x) and `top` (y).
-     */
+  background-size: cover;
   position: absolute;
+
+  scale: 1.2;
 }
 
 .grid {
@@ -28,7 +62,10 @@ body {
   width: 800px;
   height: 800px;
   border: solid black;
-  background-color: grey;
+  background-image: url("https://png2.cleanpng.com/sh/1d81f8afd1fae5461ef0f73eae6a51a4/L0KzQYm3VMA0N6V7fZH0aYP2gLBuTgBia15yedC2cHz4g370k71xaZQyhdN3LXH1c7Lrhb1oaZ5qRd54Z3AwgLLqjfFvNWZme6UBZkfnQoTpUfY0Nmk3SqICMka3QYa5Usc2P2Y1SaM9NkKxgLBu/kisspng-pac-man-plus-ms-pac-man-arcade-game-logo-pacman-5ac36f7d23b1f3.8220726415227575011462.png");
+  background-size: contain;
+  background-position-y: center;
+  background-repeat: no-repeat;
 }
 
 .grid div {
@@ -50,7 +87,7 @@ body {
 
 .wall {
   background-image: url("./assets/images/wall1.jpg");
-  background-size: cover;
+  background-size: contain;
 }
 
 .power-pellet {
@@ -59,8 +96,10 @@ body {
   max-height: 20px;
 }
 
-.blinky {
-  background-color: red;
+#blinky {
+  position: absolute;
+
+  background-size: cover;
 }
 
 .pinky {
@@ -81,6 +120,6 @@ body {
 
 .score {
   position: absolute;
-  top: 10px;
+  top: 0px;
   left: 10px;
 }
