@@ -37,27 +37,25 @@ function update() {
   checkDots();
 }
 
-setInterval(animate, 100);
-
 document.addEventListener("keydown", function () {
   switch (event.key) {
     case "ArrowDown":
-      velocityY = 2;
+      velocityY = 4;
       velocityX = 0;
       PACMAN_EL.style.transform = "rotate(90deg)";
       break;
     case "ArrowUp":
-      velocityY = -2;
+      velocityY = -4;
       velocityX = 0;
       PACMAN_EL.style.transform = "rotate(-90deg)";
       break;
     case "ArrowLeft":
-      velocityX = -2;
+      velocityX = -4;
       velocityY = 0;
       PACMAN_EL.style.transform = "rotate(180deg)";
       break;
     case "ArrowRight":
-      velocityX = 2;
+      velocityX = 4;
       velocityY = 0;
       PACMAN_EL.style.transform = "rotate(0deg)";
       break;
@@ -76,17 +74,17 @@ function checkCollision(target) {
       target.getClientRects()[0].y
   ) {
     if (velocityX > 0) {
-      positionX -= 2;
+      positionX -= 4;
       PACMAN_EL.style.left = positionX + "px";
     } else if (velocityX < 0) {
-      positionX += 2;
+      positionX += 4;
       PACMAN_EL.style.left = positionX + "px";
     }
     if (velocityY > 0) {
-      positionY -= 2;
+      positionY -= 4;
       PACMAN_EL.style.top = positionY + "px";
     } else if (velocityY < 0) {
-      positionY += 2;
+      positionY += 4;
       PACMAN_EL.style.top = positionY + "px";
     }
   }
@@ -96,7 +94,7 @@ function animate() {
   PACMAN_EL.style.backgroundImage = `url("${pacmanImages[imageCount]}")`;
 
   imageCount++;
-  if (pacmanImages.length == imageCount) {
+  if (pacmanImages.length === imageCount) {
     imageCount = 0;
   }
   return imageCount;
@@ -123,9 +121,22 @@ function checkDots() {
       }
     }
   }
+  if (
+    PACMAN_EL.getClientRects()[0].x > 965 &&
+    PACMAN_EL.getClientRects()[0].y > 343
+  ) {
+    positionX = 300.8181457519531;
+    positionY = 355.99713134765625;
+  } else if (
+    PACMAN_EL.getClientRects()[0].x < 210 &&
+    PACMAN_EL.getClientRects()[0].y > 343
+  ) {
+    positionX = 950;
+    positionY = 350;
+  }
 }
-
-setInterval(update, 16.67);
+setInterval(animate, 100);
+setInterval(update, 16.666);
 console.log(
   document.querySelector("#game").getClientRects()[0].y +
     document.querySelector("#game").getClientRects()[0].height -
