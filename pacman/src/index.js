@@ -64,23 +64,14 @@ SCOREFIELD.innerText = `Score: ${score}`;
 SCOREFIELD.classList.add("score");
 document.body.appendChild(SCOREFIELD);
 
+let highscore = 0;
 
-
-
-let highscore = 0
-
-const headline = document.getElementById("headline")
+const headline = document.getElementById("headline");
 
 const highscoreField = document.createElement("span");
-highscoreField.innerText = `Highscore: ${localStorage.getItem('highscore')}`;
+highscoreField.innerText = `Highscore: ${localStorage.getItem("highscore")}`;
 highscoreField.classList.add("highscore");
 document.body.appendChild(highscoreField);
-
-
-
-
-
-
 
 let pacmanImages = [
   "./assets/images/pacman/pacman-0.png",
@@ -95,15 +86,7 @@ function movePacMan() {
   pacmanXY[1] += pacmanDirection[1];
   PACMAN_EL.style.top = pacmanXY[1] + "px";
 }
-function update() {
-  followPacman(BLINKY_EL, blinkyDirection);
-  followPacman(CLYDE_EL, clydeDirection);
-  followPacman(INKY_EL, inkyDirection);
-  followPacman(PINKY_EL, pinkyDirection);
-  moveGhost(blinkyDirection, blinkyXY, BLINKY_EL);
-  moveGhost(clydeDirection, clydeXY, CLYDE_EL);
-  moveGhost(inkyDirection, inkyXY, INKY_EL);
-  moveGhost(pinkyDirection, pinkyXY, PINKY_EL);
+/*
   for (i in squares) {
     if (squares[i].classList.contains("wall")) {
       checkCollision(PACMAN_EL, squares[i], pacmanXY, pacmanDirection);
@@ -123,7 +106,34 @@ function update() {
     } else if (squares[i].classList.contains("power-pellet")) {
       checkPowerDots(squares[i]);
     }
+  }*/
+function update() {
+  for (i in squares) {
+    if (squares[i].classList.contains("wall")) {
+      checkCollision(PACMAN_EL, squares[i], pacmanXY, pacmanDirection);
+    } else if (
+      squares[i].classList.contains("left-exit") ||
+      squares[i].classList.contains("right-exit")
+    ) {
+      checkExitColl(squares[i]);
+    } else if (squares[i].classList.contains("right-enter")) {
+      enterRight = squares[i];
+    } else if (squares[i].classList.contains("left-enter")) {
+      enterLeft = squares[i];
+    } else if (squares[i].classList.contains("power-pellet")) {
+      checkPowerDots(squares[i]);
+    }
   }
+}
+function nae() {
+  followPacman(BLINKY_EL, blinkyDirection);
+  followPacman(CLYDE_EL, clydeDirection);
+  followPacman(INKY_EL, inkyDirection);
+  followPacman(PINKY_EL, pinkyDirection);
+  moveGhost(blinkyDirection, blinkyXY, BLINKY_EL);
+  moveGhost(clydeDirection, clydeXY, CLYDE_EL);
+  moveGhost(inkyDirection, inkyXY, INKY_EL);
+  moveGhost(pinkyDirection, pinkyXY, PINKY_EL);
 }
 
 document.addEventListener("keydown", function (e) {
@@ -218,14 +228,13 @@ function checkDots() {
         pacDot.classList.remove("pac-dot");
         score++;
         SCOREFIELD.innerText = `Score: ${score}`;
-        
       }
     }
   }
-  if (score > highscore){
-         localStorage.setItem('highscore',score)
-
-        }
+  if (score > highscore) {
+    localStorage.setItem("highscore", score);
+  }
+}
 function checkPowerDots(pacPowerDot) {
   if (
     PACMAN_EL.getClientRects()[0].x <
@@ -244,10 +253,7 @@ function checkPowerDots(pacPowerDot) {
     SCOREFIELD.innerText = `Score: ${score}`;
   }
 }
-        
-}
-console.log(localStorage.getItem("highscore")
-)
+console.log(localStorage.getItem("highscore"));
 function moveGhost(direction, ghostXY, ghost) {
   ghostXY[0] += direction[0];
   ghostXY[1] += direction[1];
@@ -313,6 +319,7 @@ function checkWin() {
     document.removeEventListener("keydown");
   }
 }
+setInterval(nae, 16);
 setInterval(update, 16);
 setInterval(movePacMan, 16);
 setInterval(checkDots, 16);
