@@ -64,6 +64,24 @@ SCOREFIELD.innerText = `Score: ${score}`;
 SCOREFIELD.classList.add("score");
 document.body.appendChild(SCOREFIELD);
 
+
+
+
+let highscore = 0
+
+const headline = document.getElementById("headline")
+
+const highscoreField = document.createElement("span");
+highscoreField.innerText = `Highscore: ${localStorage.getItem('highscore')}`;
+highscoreField.classList.add("highscore");
+document.body.appendChild(highscoreField);
+
+
+
+
+
+
+
 let pacmanImages = [
   "./assets/images/pacman/pacman-0.png",
   "./assets/images/pacman/pacman-1.png",
@@ -200,10 +218,14 @@ function checkDots() {
         pacDot.classList.remove("pac-dot");
         score++;
         SCOREFIELD.innerText = `Score: ${score}`;
+        
       }
     }
   }
-}
+  if (score > highscore){
+         localStorage.setItem('highscore',score)
+
+        }
 function checkPowerDots(pacPowerDot) {
   if (
     PACMAN_EL.getClientRects()[0].x <
@@ -222,7 +244,10 @@ function checkPowerDots(pacPowerDot) {
     SCOREFIELD.innerText = `Score: ${score}`;
   }
 }
-
+        
+}
+console.log(localStorage.getItem("highscore")
+)
 function moveGhost(direction, ghostXY, ghost) {
   ghostXY[0] += direction[0];
   ghostXY[1] += direction[1];
