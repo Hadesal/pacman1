@@ -80,8 +80,9 @@ body {
 }
 
 .power-pellet {
-  background-color: green;
-  border-radius: 10px;
+  content: url("./assets/images/pellet/power-pellet.png");
+  max-width: 20px;
+  max-height: 20px;
 }
 
 .blinky {

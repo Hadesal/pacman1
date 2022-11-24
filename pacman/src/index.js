@@ -6,8 +6,8 @@ const BLINKY_PICS = [
   "../assets/images/ghosts/ghost-blinky-right.png",
   "../assets/images/ghosts/ghost-blinky-down.png",
   "../assets/images/ghosts/ghost-blinky-left.png",
-  "../assets/images/ghosts/ghost-blinky-up.png"
-]
+  "../assets/images/ghosts/ghost-blinky-up.png",
+];
 
 let blinkyXY = [400, 400];
 let blinkyDirection = [0, 0];
@@ -18,8 +18,8 @@ const CLYDE_PICS = [
   "../assets/images/ghosts/ghost-clyde-right.png",
   "../assets/images/ghosts/ghost-clyde-down.png",
   "../assets/images/ghosts/ghost-clyde-left.png",
-  "../assets/images/ghosts/ghost-clyde-up.png"
-]
+  "../assets/images/ghosts/ghost-clyde-up.png",
+];
 
 let clydeXY = [350, 400];
 let clydeDirection = [0, 0];
@@ -30,8 +30,8 @@ const INKY_PICS = [
   "../assets/images/ghosts/ghost-inky-right.png",
   "../assets/images/ghosts/ghost-inky-down.png",
   "../assets/images/ghosts/ghost-inky-left.png",
-  "../assets/images/ghosts/ghost-inky-up.png"
-]
+  "../assets/images/ghosts/ghost-inky-up.png",
+];
 
 let inkyXY = [420, 390];
 let inkyDirection = [0, 0];
@@ -42,8 +42,8 @@ const PINKY_PICS = [
   "../assets/images/ghosts/ghost-pinky-right.png",
   "../assets/images/ghosts/ghost-pinky-down.png",
   "../assets/images/ghosts/ghost-pinky-left.png",
-  "../assets/images/ghosts/ghost-pinky-up.png"
-]
+  "../assets/images/ghosts/ghost-pinky-up.png",
+];
 
 let pinkyXY = [450, 400];
 let pinkyDirection = [0, 0];
@@ -53,7 +53,12 @@ let pacmanDirection = [-2, 0];
 PACMAN_EL.style.transform = "rotate(180deg)";
 let pacmanXY = [400, 300];
 
+const WIN_SCORE = 465;
+
+let enterRight;
+let enterLeft;
 let score = 0;
+
 const SCOREFIELD = document.createElement("span");
 SCOREFIELD.innerText = `Score: ${score}`;
 SCOREFIELD.classList.add("score");
@@ -64,9 +69,6 @@ let pacmanImages = [
   "./assets/images/pacman/pacman-1.png",
   "./assets/images/pacman/pacman-2.png",
 ];
-const PACMAN_1 = "./assets/images/pacman/pacman-1.png";
-const PACMAN_2 = "./assets/images/pacman/pacman-2.png";
-const PACMAN_3 = "./assets/images/pacman/pacman-0.png";
 
 let imageCount = 0;
 function movePacMan() {
@@ -92,16 +94,24 @@ function update() {
       checkCollision(CLYDE_EL, squares[i], clydeXY, clydeDirection);
       checkCollision(INKY_EL, squares[i], inkyXY, inkyDirection);
       checkCollision(PINKY_EL, squares[i], pinkyXY, pinkyDirection);
+    } else if (
+      squares[i].classList.contains("left-exit") ||
+      squares[i].classList.contains("right-exit")
+    ) {
+      checkExitColl(squares[i]);
+    } else if (squares[i].classList.contains("right-enter")) {
+      enterRight = squares[i];
+    } else if (squares[i].classList.contains("left-enter")) {
+      enterLeft = squares[i];
+    } else if (squares[i].classList.contains("power-pellet")) {
+      checkPowerDots(squares[i]);
     }
   }
   checkDots();
-  setTimeout(update, 16.67);
 }
 
-setInterval(animate, 100);
-
-document.addEventListener("keydown", function () {
-  switch (event.key) {
+document.addEventListener("keydown", function (e) {
+  switch (e.key) {
     case "ArrowDown":
       pacmanDirection[1] = 2;
       pacmanDirection[0] = 0;
@@ -120,6 +130,7 @@ document.addEventListener("keydown", function () {
     case "ArrowRight":
       pacmanDirection[0] = 2;
       pacmanDirection[1] = 0;
+
       PACMAN_EL.style.transform = "rotate(0deg)";
       break;
   }
@@ -136,7 +147,7 @@ function checkCollision(entity, target, positionXY, direction) {
     entity.getClientRects()[0].y + entity.getClientRects()[0].height >
       target.getClientRects()[0].y
   ) {
-    if (direction[0] > 0 ) {
+    if (direction[0] > 0) {
       positionXY[0] -= 4;
       entity.style.left = positionXY[0] + "px";
     } else if (direction[0] < 0) {
@@ -152,16 +163,26 @@ function checkCollision(entity, target, positionXY, direction) {
     }
   }
 }
-
-function animate() {
-  PACMAN_EL.style.backgroundImage = `url("${pacmanImages[imageCount]}")`;
-
-  imageCount++;
-  if (pacmanImages.length == imageCount) {
-    imageCount = 0;
+function checkExitColl(exit) {
+  if (
+    PACMAN_EL.getClientRects()[0].x <
+      exit.getClientRects()[0].x + exit.getClientRects()[0].width &&
+    PACMAN_EL.getClientRects()[0].x + PACMAN_EL.getClientRects()[0].width >
+      exit.getClientRects()[0].x &&
+    PACMAN_EL.getClientRects()[0].y <
+      exit.getClientRects()[0].y + exit.getClientRects()[0].height &&
+    PACMAN_EL.getClientRects()[0].y + PACMAN_EL.getClientRects()[0].height >
+      exit.getClientRects()[0].y
+  ) {
+    if (exit.classList.contains("left-exit")) {
+      positionX = enterRight.getClientRects()[0].x - 250;
+    }
+    if (exit.classList.contains("right-exit")) {
+      positionX = enterLeft.getClientRects()[0].x - 155;
+    }
   }
-  return imageCount;
 }
+
 const img = document.getElementById("imgPac");
 function checkDots() {
   for (i in squares) {
@@ -185,65 +206,93 @@ function checkDots() {
     }
   }
 }
+function checkPowerDots(pacPowerDot) {
+  if (
+    PACMAN_EL.getClientRects()[0].x <
+      pacPowerDot.getClientRects()[0].x +
+        pacPowerDot.getClientRects()[0].width &&
+    PACMAN_EL.getClientRects()[0].x + PACMAN_EL.getClientRects()[0].width >
+      pacPowerDot.getClientRects()[0].x &&
+    PACMAN_EL.getClientRects()[0].y <
+      pacPowerDot.getClientRects()[0].y +
+        pacPowerDot.getClientRects()[0].height &&
+    PACMAN_EL.getClientRects()[0].y + PACMAN_EL.getClientRects()[0].height >
+      pacPowerDot.getClientRects()[0].y
+  ) {
+    pacPowerDot.classList.remove("power-pellet");
+    score += 10;
+    SCOREFIELD.innerText = `Score: ${score}`;
+  }
+}
 
 function moveGhost(direction, ghostXY, ghost) {
   ghostXY[0] += direction[0];
   ghostXY[1] += direction[1];
   ghost.style.left = ghostXY[0] + "px";
   ghost.style.top = ghostXY[1] + "px";
-
 }
-
 
 function followPacman(entity, direction) {
-    console.log("follow");
-    const xDifference = entity.getClientRects()[0].x - PACMAN_EL.getClientRects()[0].x;
-    const yDifference = entity.getClientRects()[0].y - PACMAN_EL.getClientRects()[0].y;
-    if(Math.abs(xDifference) < Math.abs(yDifference) ) {
-      if(Math.abs(xDifference) < 10) {
-        direction[0] = 0;
-        if(yDifference > 0) {
-          direction[1] = -2;
-        }
-        else if(yDifference < 0) {
-          direction[1] = 2;
-        }
-      else {
-      //direction[1] = 0;
-      if(xDifference > 0) {
-        direction[0] = -2;
-      }
-      else if(xDifference < 0) {
-        direction[0] = 2;
-      }
-      
-      }
-    }
-    }
-    else if(Math.abs(xDifference) > Math.abs(yDifference)) {
-      if(Math.abs(yDifference) < 10) {
-        direction[1] = 0;
-        if(xDifference > 0) {
+  console.log("follow");
+  const xDifference =
+    entity.getClientRects()[0].x - PACMAN_EL.getClientRects()[0].x;
+  const yDifference =
+    entity.getClientRects()[0].y - PACMAN_EL.getClientRects()[0].y;
+  if (Math.abs(xDifference) < Math.abs(yDifference)) {
+    if (Math.abs(xDifference) < 10) {
+      direction[0] = 0;
+      if (yDifference > 0) {
+        direction[1] = -2;
+      } else if (yDifference < 0) {
+        direction[1] = 2;
+      } else {
+        //direction[1] = 0;
+        if (xDifference > 0) {
           direction[0] = -2;
-        }
-        else if(xDifference < 0) {
+        } else if (xDifference < 0) {
           direction[0] = 2;
         }
-        
-      }
-      else {
-      //direction[0] = 0;
-      if(yDifference > 0) {
-        direction[1] = -2;
-      }
-      else if(yDifference < 0) {
-        direction[1] = 2;
-      }
-      
       }
     }
-    
+  } else if (Math.abs(xDifference) > Math.abs(yDifference)) {
+    if (Math.abs(yDifference) < 10) {
+      direction[1] = 0;
+      if (xDifference > 0) {
+        direction[0] = -2;
+      } else if (xDifference < 0) {
+        direction[0] = 2;
+      }
+    } else {
+      //direction[0] = 0;
+      if (yDifference > 0) {
+        direction[1] = -2;
+      } else if (yDifference < 0) {
+        direction[1] = 2;
+      }
+    }
+  }
 }
 
-setTimeout(update, 1000/60);
+setTimeout(update, 1000 / 60);
 
+function animate() {
+  PACMAN_EL.style.backgroundImage = `url("${pacmanImages[imageCount]}")`;
+
+  imageCount++;
+  if (pacmanImages.length === imageCount) {
+    imageCount = 0;
+  }
+  return imageCount;
+}
+
+function checkWin() {
+  if (score === WIN_SCORE) {
+    alert("You Won");
+    velocityX = 0;
+    velocityY = 0;
+    document.removeEventListener("keydown");
+  }
+}
+setInterval(checkWin, 100);
+setInterval(animate, 100);
+setInterval(update, 16.666);
