@@ -11,10 +11,12 @@ let enterRight;
 let enterLeft;
 let imageCount = 0;
 let score = 0;
+let highscore = 0;
 const SCOREFIELD = document.createElement("span");
 SCOREFIELD.innerText = `Score: ${score}`;
 SCOREFIELD.classList.add("score");
 document.body.appendChild(SCOREFIELD);
+
 const BLINKY_PICS = [
   "../assets/images/ghosts/ghost-blinky-right.png",
   "../assets/images/ghosts/ghost-blinky-down.png",
@@ -33,6 +35,12 @@ const INKY_PICS = [
   "../assets/images/ghosts/ghost-inky-left.png",
   "../assets/images/ghosts/ghost-inky-up.png",
 ];
+
+const highscoreField = document.createElement("span");
+highscoreField.innerText = `Highscore: ${localStorage.getItem("highscore")}`;
+highscoreField.classList.add("highscore");
+document.body.appendChild(highscoreField);
+
 class Ghost {
   constructor(element, x, y, directionX, directionY) {
     this.element = element;
@@ -241,6 +249,9 @@ function checkWin() {
     velocityX = 0;
     velocityY = 0;
     document.removeEventListener("keydown");
+  }
+  if (score > highscore) {
+    localStorage.setItem("highscore", score);
   }
 }
 
