@@ -11,7 +11,7 @@ let enterRight;
 let enterLeft;
 let imageCount = 0;
 let score = 0;
-let highscore = 0;
+let highscore = localStorage.getItem("highscore");
 const SCOREFIELD = document.createElement("span");
 SCOREFIELD.innerText = `Score: ${score}`;
 SCOREFIELD.classList.add("score");
